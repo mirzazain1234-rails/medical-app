@@ -1,0 +1,57 @@
+<section id="pricing" class="pricing section">
+
+  <!-- Section Title -->
+  <div class="container section-title">
+    <h2>Pricing</h2>
+    <p>Necessitatibus eius consequatur ex aliquid fuga eum quidem sint consectetur velit</p>
+  </div><!-- End Section Title -->
+
+  <div class="container">
+    <div class="row gy-3">
+
+      <% @products.each do |product| %>
+        <div class="col-xl-3 col-lg-6">
+          <div class="pricing-item">
+            <h3><%= product.name %></h3>
+            <h4><sup>$</sup><%= product.price %><span> / month</span></h4>
+            <ul>
+              <li><%= product.description %></li>
+            </ul>
+            <%= form_with url: payments_path, method: :post do %>
+              <%= hidden_field_tag :product_id, product.id %>
+              <%= submit_tag "Pay $#{product.price}", class: "btn-buy" %>
+            <% end %>
+          </div>
+        </div><!-- End Pricing Item -->
+      <% end %>
+
+    </div>
+  </div>
+
+</section><!-- /Pricing Section -->
+
+<script src="https://checkout.flutterwave.com/v3.js"></script>
+<script>
+  function payWithFlutterwave(productId, amount) {
+    fetch(`/payments/create?product_id=${productId}`)
+      .then(response => response.json())
+      .then(data => {
+        FlutterwaveCheckout({
+          public_key: data.public_key,
+          tx_ref: data.tx_ref,
+          amount: data.amount,
+          currency: data.currency,
+          customer: data.customer,
+          callback: function (paymentData) {
+            // redirect to backend verification
+            window.location.href = data.redirect_url;
+          },
+          onclose: function() {},
+          customizations: {
+            title: "Medical App",
+            description: `Purchase ${amount}`
+          }
+        });
+      });
+  }
+</script>

@@ -1,0 +1,44 @@
+<h1 class="section-title text-center my-5">Add New Product</h1>
+
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-lg-6">
+      <div class="card p-4 shadow-sm">
+        <%= form_with(model: @product, local: true) do |form| %>
+
+          <% if @product.errors.any? %>
+            <div class="alert alert-danger">
+              <h4><%= pluralize(@product.errors.count, "error") %> prohibited this product from being saved:</h4>
+              <ul>
+                <% @product.errors.full_messages.each do |message| %>
+                  <li><%= message %></li>
+                <% end %>
+              </ul>
+            </div>
+          <% end %>
+
+          <div class="mb-3">
+            <%= form.label :name, class: "form-label" %>
+            <%= form.text_field :name, class: "form-control", placeholder: "Product Name" %>
+          </div>
+
+          <div class="mb-3">
+            <%= form.label :description, class: "form-label" %>
+            <%= form.text_area :description, class: "form-control", placeholder: "Product Description", rows: 3 %>
+          </div>
+
+          <div class="mb-3">
+            <%= form.label :price, class: "form-label" %>
+            <%= form.number_field :price, class: "form-control", step: 0.01, placeholder: "0.00" %>
+          </div>
+
+          <div class="text-center">
+            <%= form.submit "Create Product", class: "btn btn-success btn-lg" %>
+            <%= link_to "Cancel", products_path, class: "btn btn-secondary btn-lg ms-2" %>
+          </div>
+
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
