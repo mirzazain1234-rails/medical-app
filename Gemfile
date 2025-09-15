@@ -5,9 +5,7 @@ gem "rails", "~> 7.2.2", ">= 7.2.2.1"
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem "sprockets-rails"
 # Use sqlite3 as the database for Active Record
-group :development, :test do
-  gem "sqlite3", ">= 1.4"
-end
+gem "sqlite3", ">= 1.4"
 # Use the Puma web server [https://github.com/puma/puma]
 gem "puma", ">= 5.0"
 # Use JavaScript with ESM import maps [https://github.com/rails/importmap-rails]
@@ -21,9 +19,7 @@ gem "jbuilder"
 gem 'stripe'
 gem 'dotenv-rails', groups: [:development, :test]
 gem 'rest-client'
-group :production do
-  gem "pg", ">= 1.1"
-end
+gem 'pg', '>= 1.1', group: :production
 
 # Use Redis adapter to run Action Cable in production
 # gem "redis", ">= 4.0.1"
